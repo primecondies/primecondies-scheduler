@@ -1,0 +1,32 @@
+{
+  "name": "primecondies-scheduler",
+  "version": "0.0.1",
+  "description": "Scheduler for Prime Condies",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "mocha src/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/primecondies/primecondies-scheduler.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Trentin Gillis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/primecondies/primecondies-scheduler/issues"
+  },
+  "homepage": "https://github.com/primecondies/primecondies-scheduler#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9"
+  }
+}

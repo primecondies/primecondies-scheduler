@@ -1,0 +1,1 @@
+* Cron scheduler for Prime Condies weather
