@@ -17,9 +17,9 @@ const updateDB = (place) => {
         throw new Error(`Status code ${response.statusCode}`);
       }
       
+      // Parse body into an object and create newPlace object
       let data = JSON.parse(body);
-
-      const newPlace = new Place({
+      const newPlace = {
         location: location,
         latitude: latitude,
         longitude: longitude,
@@ -27,8 +27,13 @@ const updateDB = (place) => {
         hourlySummary: data.hourly.summary,
         hourlyIcon: data.hourly.icon,
         hourly: data.hourly.data
+      };
+
+      // Using the location of the current place, find it in the database and
+      // update it with the new data
+      Place.findOneAndUpdate({location: location}, newPlace, (err) => {
+        if (err) { throw new Error(err); }
       });
-      newPlace.save();
     });
 }
 

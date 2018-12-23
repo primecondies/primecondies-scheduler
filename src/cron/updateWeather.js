@@ -7,6 +7,7 @@ const places = require("../config/crags");
 // Cron job that will update the weather in the database every 15 minutes
 const updateWeather = new CronJob("0 */15 * * * *", () => {
   places.forEach((place) => {
+    console.log(`${place.location} weather data updated.`);
     updateDB(place);
   });
 });
