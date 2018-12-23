@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/primecondies/primecondies-scheduler#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongoose": "^5.4.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
