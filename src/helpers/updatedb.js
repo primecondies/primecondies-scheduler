@@ -36,10 +36,10 @@ const updateDB = (place) => {
       if (err) { throw new Error(err); }
 
       if (!place) {
-        let newPlace = new Place(newPlaceData);
+        var newPlace = new Place(newPlaceData);
         newPlace.save();
       } else {
-        Place.findOneAndUpdate({ location: location }, newPlace, (err) => {
+        Place.findOneAndUpdate({ location: location }, newPlaceData, (err) => {
           if (err) { throw new Error(err); }
         });
       }
