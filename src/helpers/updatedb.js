@@ -12,29 +12,40 @@ const updateDB = (place) => {
   }
 
   request(`https://api.darksky.net/forecast/72e16ca83479ef8e30134599dcc19b7d/${latitude},${longitude}`, (error, response, body) => {
-      if (error) { throw new Error(error); }
-      if (response.statusCode !== 200) { 
-        throw new Error(`Status code ${response.statusCode}`);
-      }
-      
-      // Parse body into an object and create newPlace object
-      let data = JSON.parse(body);
-      const newPlace = {
-        location: location,
-        latitude: latitude,
-        longitude: longitude,
-        currently: data.currently,
-        hourlySummary: data.hourly.summary,
-        hourlyIcon: data.hourly.icon,
-        hourly: data.hourly.data
-      };
+    if (error) { throw new Error(error); }
+    if (response.statusCode !== 200) {
+      throw new Error(`Status code ${response.statusCode}`);
+    }
 
-      // Using the location of the current place, find it in the database and
-      // update it with the new data
-      Place.findOneAndUpdate({location: location}, newPlace, (err) => {
-        if (err) { throw new Error(err); }
-      });
+    // Parse body into an object and create newPlace object
+    let data = JSON.parse(body);
+    const newPlaceData = {
+      location: location,
+      latitude: latitude,
+      longitude: longitude,
+      currently: data.currently,
+      hourlySummary: data.hourly.summary,
+      hourlyIcon: data.hourly.icon,
+      hourly: data.hourly.data
+    };
+
+    // Attempt to find current location in the database. If it exists, update
+    // it with new data, otherwise create a new place and add it the the
+    // database
+    Place.findOne({ location: location }, (err, place) => {
+      if (err) { throw new Error(err); }
+
+      if (!place) {
+        let newPlace = new Place(newPlaceData);
+        newPlace.save();
+      } else {
+        Place.findOneAndUpdate({ location: location }, newPlace, (err) => {
+          if (err) { throw new Error(err); }
+        });
+      }
     });
+
+  });
 }
 
 module.exports = updateDB;
